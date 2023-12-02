@@ -1,9 +1,11 @@
 package com.armandorochin.firebaseshowcaseapp.ui.welcome
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.armandorochin.firebaseshowcaseapp.R
 import com.armandorochin.firebaseshowcaseapp.databinding.ActivityWelcomeBinding
 import com.armandorochin.firebaseshowcaseapp.ui.login.LoginActivity
 import com.armandorochin.firebaseshowcaseapp.ui.signin.SignInActivity
@@ -19,6 +21,7 @@ class WelcomeActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        welcomeViewModel.verifyUser()
         initUI()
     }
 
@@ -35,6 +38,12 @@ class WelcomeActivity : AppCompatActivity(){
     }
 
     private fun initObservers() {
+        welcomeViewModel.navigateToHome.observe(this, Observer {
+            it.getContentIfNotHandled()?.let {
+                goToHome()
+            }
+        })
+
         welcomeViewModel.navigateToLogin.observe(this, Observer {
             it.getContentIfNotHandled()?.let {
                 goToLogin()
@@ -54,5 +63,9 @@ class WelcomeActivity : AppCompatActivity(){
 
     private fun goToLogin() {
         startActivity(LoginActivity.create(this))
+    }
+
+    private fun goToHome() {
+        Toast.makeText(this, R.string.feature_not_allowed, Toast.LENGTH_SHORT).show()
     }
 }

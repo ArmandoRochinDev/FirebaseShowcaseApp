@@ -1,6 +1,5 @@
 package com.armandorochin.firebaseshowcaseapp.ui.signin
 
-import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -59,10 +58,6 @@ class SignInViewModel @Inject constructor(val createAccountUseCase: CreateAccoun
 
     fun onFieldsChanged(userSignIn: UserSignIn) {
         _viewState.value = userSignIn.toSignInViewState()
-    }
-
-    fun onLoginSelected() {
-        _navigateToLogin.value = Event(true)
     }
 
     private fun isValidOrEmptyEmail(email: String) =

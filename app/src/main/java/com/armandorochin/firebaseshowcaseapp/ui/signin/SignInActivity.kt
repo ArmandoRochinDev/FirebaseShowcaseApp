@@ -4,14 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.armandorochin.firebaseshowcaseapp.R
+import com.armandorochin.firebaseshowcaseapp.core.dismissKeyboard
 import com.armandorochin.firebaseshowcaseapp.core.loseFocusAfterAction
 import com.armandorochin.firebaseshowcaseapp.core.onTextChanged
 import com.armandorochin.firebaseshowcaseapp.databinding.ActivitySignInBinding
+import com.armandorochin.firebaseshowcaseapp.ui.login.LoginActivity
 import com.armandorochin.firebaseshowcaseapp.ui.signin.model.UserSignIn
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -64,7 +67,7 @@ class SignInActivity : AppCompatActivity() {
 
         with(binding) {
             btnCreateAccount.setOnClickListener {
-                //it.dismissKeyboard()
+                it.dismissKeyboard()
                 signInViewModel.onSignInSelected(
                     UserSignIn(
                         realName = binding.etRealName.text.toString(),
@@ -81,6 +84,7 @@ class SignInActivity : AppCompatActivity() {
     private fun initObservers() {
         signInViewModel.navigateToLogin.observe(this) {
             it.getContentIfNotHandled()?.let {
+                Toast.makeText(this@SignInActivity, R.string.sigin_user_created, Toast.LENGTH_SHORT).show()
                 goToLogin()
             }
         }
@@ -130,6 +134,6 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun goToLogin() {
-        //startActivity(LoginActivity.create(this))
+        startActivity(LoginActivity.create(this))
     }
 }

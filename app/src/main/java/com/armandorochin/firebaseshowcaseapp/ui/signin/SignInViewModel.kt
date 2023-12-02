@@ -36,7 +36,6 @@ class SignInViewModel @Inject constructor(val createAccountUseCase: CreateAccoun
         get() = _showErrorDialog
 
     fun onSignInSelected(userSignIn: UserSignIn) {
-        Log.d("test","entro")
         val viewState = userSignIn.toSignInViewState()
         if (viewState.userValidated() && userSignIn.isNotEmpty()) {
             signInUser(userSignIn)
@@ -50,8 +49,7 @@ class SignInViewModel @Inject constructor(val createAccountUseCase: CreateAccoun
             _viewState.value = SignInViewState(isLoading = true)
             val accountCreated = createAccountUseCase(userSignIn)
             if (accountCreated) {
-                //navigate to main activity
-                //_navigateToVerifyEmail.value = Event(true)
+                _navigateToLogin.value = Event(true)
             } else {
                 _showErrorDialog.value = true
             }

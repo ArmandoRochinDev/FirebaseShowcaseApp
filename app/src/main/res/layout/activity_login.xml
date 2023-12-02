@@ -6,19 +6,13 @@
     android:layout_height="match_parent"
     android:background="@color/background_dark">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="658dp" />
-
     <include
         android:id="@+id/viewHeader"
         layout="@layout/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        android:layout_marginTop="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilEmail"
@@ -66,7 +60,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvForgotPassword"
+        android:id="@+id/tvSignIn"
         style="@style/TertiaryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,7 +80,7 @@
         android:text="@string/login_button_loggin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvForgotPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSignIn" />
 
     <ProgressBar
         android:id="@+id/pbLoading"

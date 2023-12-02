@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.armandorochin.firebaseshowcaseapp.databinding.ActivityWelcomeBinding
+import com.armandorochin.firebaseshowcaseapp.ui.login.LoginActivity
 import com.armandorochin.firebaseshowcaseapp.ui.signin.SignInActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,6 +53,6 @@ class WelcomeActivity : AppCompatActivity(){
     }
 
     private fun goToLogin() {
-        //startActivity(LoginActivity.create(this))
+        startActivity(LoginActivity.create(this))
     }
 }

@@ -15,6 +15,9 @@
         android:name=".App">
         <activity
             android:name=".ui.signin.SignInActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.welcome.WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

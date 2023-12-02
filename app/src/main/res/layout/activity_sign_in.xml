@@ -6,21 +6,15 @@
     android:layout_height="match_parent"
     android:background="@color/background_dark">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="658dp" />
-
     <include
         android:id="@+id/viewHeader"
         layout="@layout/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/formView"
-        app:layout_constraintTop_toBottomOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <ScrollView

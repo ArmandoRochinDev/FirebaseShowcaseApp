@@ -2,7 +2,6 @@ package com.armandorochin.firebaseshowcaseapp.data.network
 
 import com.armandorochin.firebaseshowcaseapp.data.response.LoginResult
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,10 +19,6 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient){
 
     fun isUserLogged(): Boolean {
         return firebase.auth.currentUser != null
-    }
-
-    fun getCurrentUser(): FirebaseUser {
-        return firebase.auth.currentUser!!
     }
 
     fun logout(){

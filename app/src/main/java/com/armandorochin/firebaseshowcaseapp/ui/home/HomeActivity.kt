@@ -9,7 +9,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.armandorochin.firebaseshowcaseapp.R
 import com.armandorochin.firebaseshowcaseapp.databinding.ActivityHomeBinding
 import com.armandorochin.firebaseshowcaseapp.ui.welcome.WelcomeActivity
@@ -21,7 +22,6 @@ class HomeActivity : AppCompatActivity() {
     companion object {
         fun create(context: Context): Intent =
             Intent(context, HomeActivity::class.java)
-
     }
 
     private lateinit var binding: ActivityHomeBinding
@@ -34,6 +34,7 @@ class HomeActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.detailsToolbar)
         initObservers()
+        homeViewModel.getUserInfo()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -63,6 +64,28 @@ class HomeActivity : AppCompatActivity() {
             it.getContentIfNotHandled()?.let {
                 goToWelcome()
             }
+        }
+
+        homeViewModel.userInfo.observe(this){
+            if(!it.showErrorDialog){
+                binding.tvNickname.text = it.nickname
+                binding.tvRealname.text = it.realname
+                binding.tvEmail.text = it.email
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            homeViewModel.viewState.collect{
+                updateUI(it)
+            }
+        }
+    }
+
+    private fun updateUI(viewState: HomeViewState){
+        with(binding){
+            tvNickname.isVisible = viewState.isValidUser
+            tvRealname.isVisible = viewState.isValidUser
+            tvEmail.isVisible = viewState.isValidUser
         }
     }
 

@@ -34,6 +34,9 @@
     <string name="signin_button_createaccount">Crear mi cuenta</string>
     <string name="sigin_user_created">Usuario creado exitosamente.</string>
 
+    <string name="home_logout">Cerrar sesión</string>
+    <string name="home_about">Acerca de</string>
+
     <string name="feature_not_allowed">En construcción.</string>
 
 </resources>

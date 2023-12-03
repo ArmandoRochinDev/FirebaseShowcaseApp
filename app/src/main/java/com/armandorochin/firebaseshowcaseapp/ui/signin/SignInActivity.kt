@@ -17,7 +17,6 @@ import com.armandorochin.firebaseshowcaseapp.databinding.ActivitySignInBinding
 import com.armandorochin.firebaseshowcaseapp.ui.login.LoginActivity
 import com.armandorochin.firebaseshowcaseapp.ui.signin.model.UserSignIn
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignInActivity : AppCompatActivity() {

@@ -1,18 +1,23 @@
 package com.armandorochin.firebaseshowcaseapp.ui.welcome
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import com.armandorochin.firebaseshowcaseapp.R
 import com.armandorochin.firebaseshowcaseapp.databinding.ActivityWelcomeBinding
+import com.armandorochin.firebaseshowcaseapp.ui.home.HomeActivity
 import com.armandorochin.firebaseshowcaseapp.ui.login.LoginActivity
 import com.armandorochin.firebaseshowcaseapp.ui.signin.SignInActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WelcomeActivity : AppCompatActivity(){
+
+    companion object {
+        fun create(context: Context): Intent =
+            Intent(context, WelcomeActivity::class.java)
+    }
 
     private lateinit var binding: ActivityWelcomeBinding
     private val welcomeViewModel: WelcomeViewModel by viewModels()
@@ -38,22 +43,22 @@ class WelcomeActivity : AppCompatActivity(){
     }
 
     private fun initObservers() {
-        welcomeViewModel.navigateToHome.observe(this, Observer {
+        welcomeViewModel.navigateToHome.observe(this) {
             it.getContentIfNotHandled()?.let {
                 goToHome()
             }
-        })
+        }
 
-        welcomeViewModel.navigateToLogin.observe(this, Observer {
+        welcomeViewModel.navigateToLogin.observe(this) {
             it.getContentIfNotHandled()?.let {
                 goToLogin()
             }
-        })
-        welcomeViewModel.navigateToSignIn.observe(this, Observer {
+        }
+        welcomeViewModel.navigateToSignIn.observe(this) {
             it.getContentIfNotHandled()?.let {
                 goToSingIn()
             }
-        })
+        }
     }
 
 
@@ -66,6 +71,6 @@ class WelcomeActivity : AppCompatActivity(){
     }
 
     private fun goToHome() {
-        Toast.makeText(this, R.string.feature_not_allowed, Toast.LENGTH_SHORT).show()
+        startActivity(HomeActivity.create(this))
     }
 }

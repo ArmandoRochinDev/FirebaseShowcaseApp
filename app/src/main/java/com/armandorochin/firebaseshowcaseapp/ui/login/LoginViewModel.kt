@@ -54,7 +54,7 @@ class LoginViewModel @Inject constructor(val loginUseCase: LoginUseCase) : ViewM
     private fun loginUser(email: String, password: String) {
         viewModelScope.launch {
             _viewState.value = LoginViewState(isLoading = true)
-            when (val result = loginUseCase(email, password)) {
+            when (loginUseCase(email, password)) {
                 LoginResult.Error -> {
                     _showErrorDialog.value =
                         UserLogin(email = email, password = password, showErrorDialog = true)
@@ -74,10 +74,6 @@ class LoginViewModel @Inject constructor(val loginUseCase: LoginUseCase) : ViewM
             isValidEmail = isValidEmail(email),
             isValidPassword = isValidPassword(password)
         )
-    }
-
-    fun onForgotPasswordSelected() {
-        _navigateToForgotPassword.value = Event(true)
     }
 
     fun onSignInSelected() {

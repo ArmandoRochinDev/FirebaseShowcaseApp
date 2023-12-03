@@ -14,6 +14,7 @@ import com.armandorochin.firebaseshowcaseapp.core.dismissKeyboard
 import com.armandorochin.firebaseshowcaseapp.core.loseFocusAfterAction
 import com.armandorochin.firebaseshowcaseapp.core.onTextChanged
 import com.armandorochin.firebaseshowcaseapp.databinding.ActivityLoginBinding
+import com.armandorochin.firebaseshowcaseapp.ui.home.HomeActivity
 import com.armandorochin.firebaseshowcaseapp.ui.login.model.UserLogin
 import com.armandorochin.firebaseshowcaseapp.ui.signin.SignInActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -137,11 +138,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun goToHome() {
-        Toast.makeText(this, R.string.feature_not_allowed, Toast.LENGTH_SHORT).show()
-        //LoginSuccessDialog.create().show(dialogLauncher, this)
-    }
-
-    private fun goToVerify() {
-        //startActivity(VerificationActivity.create(this))
+        startActivity(HomeActivity.create(this))
     }
 }

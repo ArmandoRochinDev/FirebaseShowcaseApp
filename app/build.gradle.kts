@@ -77,6 +77,8 @@ dependencies {
     kapt("androidx.room:room-compiler:2.6.0")
     //Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    //CircleImageView
+    implementation("de.hdodenhof:circleimageview:3.1.0")
     //Firebase
     implementation (platform("com.google.firebase:firebase-bom:28.2.1"))
     implementation ("com.google.firebase:firebase-analytics-ktx")
@@ -84,8 +86,7 @@ dependencies {
     implementation ("com.google.firebase:firebase-firestore-ktx")
     implementation ("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-messaging-ktx")
-
-
+    implementation("com.google.firebase:firebase-storage-ktx")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

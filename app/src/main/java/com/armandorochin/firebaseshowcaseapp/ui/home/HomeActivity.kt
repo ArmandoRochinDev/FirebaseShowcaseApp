@@ -1,20 +1,28 @@
 package com.armandorochin.firebaseshowcaseapp.ui.home
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.armandorochin.firebaseshowcaseapp.R
 import com.armandorochin.firebaseshowcaseapp.databinding.ActivityHomeBinding
 import com.armandorochin.firebaseshowcaseapp.ui.welcome.WelcomeActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
@@ -33,8 +41,44 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.detailsToolbar)
+        initUI()
         initObservers()
-        homeViewModel.getUserInfo()
+        homeViewModel.getUserInfo(this)
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){
+        if(it){
+            cameraLauncher.launch(homeViewModel.getUri())
+        }
+    }
+
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()){
+        if(it){
+            homeViewModel.getUri().let {
+                lifecycleScope.launch {
+                    homeViewModel.uploadPicture()
+                }
+            }
+        }
+    }
+
+    private fun initUI() {
+        initListeners()
+        initObservers()
+    }
+
+    private fun initListeners() {
+        with(binding){
+            profilePicture.setOnClickListener {
+                val permissionCheckResult = ContextCompat.checkSelfPermission(it.context, Manifest.permission.CAMERA)
+
+                if(permissionCheckResult == PackageManager.PERMISSION_GRANTED){
+                    cameraLauncher.launch(homeViewModel.getUri())
+                }else{
+                    requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

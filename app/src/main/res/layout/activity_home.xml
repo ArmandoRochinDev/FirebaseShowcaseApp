@@ -19,15 +19,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_picture"
+        android:layout_width="@dimen/profile_picture_size"
+        android:layout_height="@dimen/profile_picture_size"
+        android:layout_marginTop="@dimen/padding_extra_large"
+        app:civ_border_width="@dimen/profile_picture_border"
+        app:civ_border_color="?colorPrimary"
+        android:src="@drawable/ic_add_a_photo"
+        android:foreground="@drawable/ripple_selector"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/details_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/app_name"
+        android:focusable="true" />
+
     <TextView
         android:id="@+id/tvNickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
-        style="@style/BodyText"
+        style="@style/TitleText"
+        android:layout_marginTop="@dimen/padding_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/details_toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/profile_picture" />
 
     <TextView
         android:id="@+id/tvRealname"
@@ -44,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
-        style="@style/BodyText"
+        style="@style/CaptionText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvRealname" />

@@ -17,6 +17,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.armandorochin.firebaseshowcaseapp.R
 import com.armandorochin.firebaseshowcaseapp.databinding.ActivityHomeBinding
+import com.armandorochin.firebaseshowcaseapp.ui.about.AboutActivity
 import com.armandorochin.firebaseshowcaseapp.ui.welcome.WelcomeActivity
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,7 +43,6 @@ class HomeActivity : AppCompatActivity() {
         initUI()
         initObservers()
         homeViewModel.getUserInfo(this)
-        homeViewModel.getProfilePicture()
     }
 
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){
@@ -92,8 +92,7 @@ class HomeActivity : AppCompatActivity() {
                 true
             }
             R.id.action_about -> {
-                //TODO: open about activity
-                Toast.makeText(this, R.string.feature_not_allowed, Toast.LENGTH_SHORT).show()
+                goToAbout()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -138,5 +137,9 @@ class HomeActivity : AppCompatActivity() {
 
     private fun goToWelcome() {
         startActivity(WelcomeActivity.create(this))
+    }
+
+    private fun goToAbout() {
+        startActivity(AboutActivity.create(this))
     }
 }

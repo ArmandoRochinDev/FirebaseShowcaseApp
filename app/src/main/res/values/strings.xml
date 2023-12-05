@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Firebase Showcase App</string>
 
-    <string name="login_subtitle"><![CDATA[Showcase App for Auth, FCM, Analitycs, Crashlitycs, MVVM, Clean Architecture, GPS, Camera, Etc..]]></string>
+    <string name="login_subtitle"><![CDATA[Showcase App for Auth, FCM, FireStore, FireStorage, Analitycs, Crashlitycs, MVVM, Clean Architecture, Flows, LiveData, ViewState, Etc...]]></string>
     <string name="login_sign_in">¿Todavía no tienes cuenta? Regístrate</string>
     <string name="login_button_loggin">INICIAR SESIÓN</string>
     <string name="login_hint_password">Contraseña</string>
@@ -40,5 +40,10 @@
     <string name="feature_not_allowed">En construcción.</string>
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+
+    <string name="app_version">v1.1.0</string>
+    <string name="dev_name">Armando Rochin</string>
+    <string name="dev_job">Android developer</string>
+    <string name="about_title">Acerca De</string>
 
 </resources>

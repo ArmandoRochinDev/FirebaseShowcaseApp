@@ -66,9 +66,10 @@ class HomeViewModel @Inject constructor(
                         _viewState.value = HomeViewState(isLoading = false, isValidUser = false)
                 }
                 is UserResult.Data -> {
-                    initUri(context, result.email)
                     _userInfo.value = result.toUserHome()
                     _viewState.value = HomeViewState(isLoading = false, isValidUser = true)
+                    initUri(context, result.email)
+                    getProfilePicture()
                 }
             }
         }
@@ -102,7 +103,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getProfilePicture(){
+    private fun getProfilePicture(){
         viewModelScope.launch {
             when(val result = getProfilePictureUseCase()){
                 ProfilePictureResult.Error -> {

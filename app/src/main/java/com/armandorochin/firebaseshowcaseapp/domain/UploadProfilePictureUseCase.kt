@@ -6,7 +6,7 @@ import com.armandorochin.firebaseshowcaseapp.data.response.UserResult
 import javax.inject.Inject
 
 class UploadProfilePictureUseCase @Inject constructor(private val storageService: StorageService) {
-    suspend operator fun invoke(file:String,path: Uri) {
-        storageService.uploadProfilePicture(file, path)
+    suspend operator fun invoke(file:String,path: Uri):Boolean {
+        return storageService.uploadProfilePicture(file, path)
     }
 }

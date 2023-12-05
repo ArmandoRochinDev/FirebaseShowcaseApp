@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.armandorochin.firebaseshowcaseapp.core.Event
 import com.armandorochin.firebaseshowcaseapp.core.createImageFile
+import com.armandorochin.firebaseshowcaseapp.data.response.ProfilePictureResult
 import com.armandorochin.firebaseshowcaseapp.data.response.UserResult
 import com.armandorochin.firebaseshowcaseapp.domain.GetCurrentUserUseCase
+import com.armandorochin.firebaseshowcaseapp.domain.GetProfilePictureUseCase
 import com.armandorochin.firebaseshowcaseapp.domain.LogoutUseCase
 import com.armandorochin.firebaseshowcaseapp.domain.UploadProfilePictureUseCase
 import com.armandorochin.firebaseshowcaseapp.ui.home.model.UserHome
@@ -27,10 +29,10 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     val logoutUseCase: LogoutUseCase,
     val getCurrentUserUseCase: GetCurrentUserUseCase,
-    val uploadProfilePictureUseCase: UploadProfilePictureUseCase
+    val uploadProfilePictureUseCase: UploadProfilePictureUseCase,
+    val getProfilePictureUseCase: GetProfilePictureUseCase
 ): ViewModel(){
     private var file: File? = null
-    private var userEmail:String = ""
     private var capturedImageUri = Uri.EMPTY
 
     private val _navigateToWelcome = MutableLiveData<Event<Boolean>>()
@@ -60,7 +62,7 @@ class HomeViewModel @Inject constructor(
             when(val result = getCurrentUserUseCase()){
                 UserResult.Error -> {
                     _showErrorDialog.value =
-                        UserHome(email = "", nickname = "", realname = "", showErrorDialog = true)
+                        UserHome(email = "", nickname = "", realname = "", showErrorDialog = true, null)
                         _viewState.value = HomeViewState(isLoading = false, isValidUser = false)
                 }
                 is UserResult.Data -> {
@@ -85,7 +87,31 @@ class HomeViewModel @Inject constructor(
         return capturedImageUri
     }
 
-    suspend fun uploadPicture(){
-        uploadProfilePictureUseCase(file!!.name, capturedImageUri)
+    fun uploadPicture(){
+        viewModelScope.launch {
+            if(uploadProfilePictureUseCase(file!!.name, capturedImageUri)){
+                when(val result = getProfilePictureUseCase()){
+                    ProfilePictureResult.Error -> {
+                    }
+                    is ProfilePictureResult.Success -> {
+                        _userInfo.value?.imgUrl = result.imgUrl
+                        _userInfo.postValue(_userInfo.value)
+                    }
+                }
+            }
+        }
+    }
+
+    fun getProfilePicture(){
+        viewModelScope.launch {
+            when(val result = getProfilePictureUseCase()){
+                ProfilePictureResult.Error -> {
+                }
+                is ProfilePictureResult.Success -> {
+                    _userInfo.value?.imgUrl = result.imgUrl
+                    _userInfo.postValue(_userInfo.value)
+                }
+            }
+        }
     }
 }

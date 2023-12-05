@@ -4,13 +4,11 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -20,8 +18,8 @@ import androidx.lifecycle.lifecycleScope
 import com.armandorochin.firebaseshowcaseapp.R
 import com.armandorochin.firebaseshowcaseapp.databinding.ActivityHomeBinding
 import com.armandorochin.firebaseshowcaseapp.ui.welcome.WelcomeActivity
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -44,6 +42,7 @@ class HomeActivity : AppCompatActivity() {
         initUI()
         initObservers()
         homeViewModel.getUserInfo(this)
+        homeViewModel.getProfilePicture()
     }
 
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){
@@ -55,9 +54,7 @@ class HomeActivity : AppCompatActivity() {
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()){
         if(it){
             homeViewModel.getUri().let {
-                lifecycleScope.launch {
-                    homeViewModel.uploadPicture()
-                }
+                homeViewModel.uploadPicture()
             }
         }
     }
@@ -111,10 +108,15 @@ class HomeActivity : AppCompatActivity() {
         }
 
         homeViewModel.userInfo.observe(this){
-            if(!it.showErrorDialog){
-                binding.tvNickname.text = it.nickname
-                binding.tvRealname.text = it.realname
-                binding.tvEmail.text = it.email
+            it?.let {
+                if(!it.showErrorDialog){
+                    binding.tvNickname.text = it.nickname
+                    binding.tvRealname.text = it.realname
+                    binding.tvEmail.text = it.email
+                    it.imgUrl?.let { img ->
+                        Glide.with(this).load(img).into(binding.profilePicture)
+                    }
+                }
             }
         }
 
@@ -130,6 +132,7 @@ class HomeActivity : AppCompatActivity() {
             tvNickname.isVisible = viewState.isValidUser
             tvRealname.isVisible = viewState.isValidUser
             tvEmail.isVisible = viewState.isValidUser
+            profilePicture.isVisible = viewState.isValidUser
         }
     }
 

@@ -12,7 +12,7 @@ sealed class UserResult {
     ) : UserResult(){
         fun toUserHome():UserHome{
             return UserHome(
-                email, nickname, realname, false
+                email, nickname, realname, false, null
             )
         }
     }

@@ -24,8 +24,13 @@ class StorageService @Inject constructor(firebase: FirebaseClient){
     suspend fun getUserPicture(): ProfilePictureResult {
         val listResult: ListResult = getStorageReference().list(1).await()
 
-        val result = listResult.items[0].downloadUrl.await()
-        return toProfilePictureResult(result)
+
+        return if(listResult.items.size > 0){
+            val result = listResult.items[0].downloadUrl.await()
+            toProfilePictureResult(result)
+        }else{
+            ProfilePictureResult.Error
+        }
     }
 
     private fun toProfilePictureResult(uri: Uri): ProfilePictureResult {
